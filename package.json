@@ -1,0 +1,25 @@
+{
+  "name": "zpro",
+  "version": "1.0.0",
+  "description": "cmd上的项目管理工具",
+  "main": "index.js",
+  "bin": {
+    "zpro": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zkisme/zpro.git"
+  },
+  "author": "Narney",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zkisme/zpro/issues"
+  },
+  "homepage": "https://github.com/zkisme/zpro#readme",
+  "devDependencies": {
+    "commander": "^8.2.0"
+  }
+}
