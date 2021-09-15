@@ -1,6 +1,6 @@
 {
   "name": "zpro",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "cmd上的项目管理工具",
   "main": "index.js",
   "bin": {
@@ -19,8 +19,8 @@
     "url": "https://github.com/zkisme/zpro/issues"
   },
   "homepage": "https://github.com/zkisme/zpro#readme",
-  "devDependencies": {
+  "dependencies": {
     "commander": "^8.2.0",
-    "inquirer": "^8.1.3"
+    "inquirer": "^8.1.4"
   }
 }
