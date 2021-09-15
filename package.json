@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/zkisme/zpro#readme",
   "devDependencies": {
-    "commander": "^8.2.0"
+    "commander": "^8.2.0",
+    "inquirer": "^8.1.3"
   }
 }
