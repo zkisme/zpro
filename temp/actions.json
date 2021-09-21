@@ -1,0 +1,15 @@
+{
+  "openCmd": {
+    "name": "用新的CMD打开",
+    "command": "start cmd.exe /k cd __projectPath__"
+  },
+  "openVscode": { "name": "用vscode打开", "command": "code __projectPath__" },
+  "openExplorer": {
+    "name": "用资源管理器打开",
+    "command": "start __projectPath__"
+  },
+  "cmder": {
+    "name": "用cmder打开",
+    "command": "start cmder.exe /c __projectPath__"
+  }
+}

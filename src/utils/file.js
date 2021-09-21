@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const prettier = require('prettier')
 
 const isDir = (filePath) => {
   try {
@@ -46,5 +47,10 @@ const writeFile = (filePath, content = '', options) => {
   fs.writeFileSync(filePath, content, {encoding: 'utf-8', ...options})
 }
 
-module.exports = { readFile, writeFile, readDir }
+const writeJSON =  (filePath, content = '', options) => {
+  if(!isDir(filePath)) createDir(path.dirname(filePath))
+  fs.writeFileSync(filePath, prettier.format(content, {parser: 'json'}), {encoding: 'utf-8', ...options})
+}
+
+module.exports = { readFile, writeFile, readDir, writeJSON }
 

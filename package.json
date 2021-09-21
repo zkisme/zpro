@@ -1,10 +1,10 @@
 {
   "name": "zpro",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "cmd上的项目管理工具",
-  "main": "index.js",
+  "main": "./cli.js",
   "bin": {
-    "zpro": "./index.js"
+    "zpro": "./cli.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,5 +22,8 @@
   "dependencies": {
     "commander": "^8.2.0",
     "inquirer": "^8.1.4"
+  },
+  "devDependencies": {
+    "prettier": "^2.4.1"
   }
 }
