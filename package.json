@@ -1,6 +1,6 @@
 {
   "name": "zpro",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "cmd上的项目管理工具",
   "main": "./cli.js",
   "bin": {

@@ -5,18 +5,53 @@ const { execSync } = require('child_process');
 const projectActionPath = path.resolve(__dirname, '../temp/actions.json')
 const projectTempPath = path.resolve(__dirname, '../temp/projectList.json')
 
-const {writeJSON, readDir} = require('./utils/file')
+const {writeJSON, readDir, readFile} = require('./utils/file')
+
+const reset = (filePath) => {
+  const actions = {
+    "openCmd": {
+      "name": "用新的CMD打开",
+      "command": "start cmd.exe /k cd __projectPath__"
+    },
+    "openVscode": { "name": "用vscode打开", "command": "code __projectPath__" },
+    "openExplorer": {
+      "name": "用资源管理器打开",
+      "command": "start __projectPath__"
+    },
+    "cmder": {
+      "name": "用cmder打开",
+      "command": "start cmder.exe /START __projectPath__"
+    }
+  }
+  const projectList = {}
+
+  if(filePath === projectActionPath) writeJSON(projectActionPath, JSON.stringify(actions))
+  else if(filePath === projectTempPath) writeJSON(projectTempPath, JSON.stringify(projectList))
+  else {
+    writeJSON(projectActionPath, JSON.stringify(actions))
+    writeJSON(projectTempPath, JSON.stringify(projectList))
+  }
+}
+
+const getJson = (filePath) => {
+  try {
+    return JSON.parse(readFile(filePath))
+  } catch (error) {
+    reset(filePath)
+    return JSON.parse(readFile(filePath))
+  }
+}
 
 const add = (script, options) => {
   const [key, projectUrl] = options.args
-  let projectList = require(projectTempPath)
+  let projectList = getJson(projectTempPath)
   projectList[key] = projectUrl
   writeJSON(projectTempPath, JSON.stringify(projectList))
   console.log(`add ${key} -- ${projectUrl} success`)
 }
 
 const remove = (script, options) => {
-  let projectList = require(projectTempPath)
+  let projectList = getJson(projectTempPath)
   const [key] = options.args
   delete projectList[key]
   writeJSON(projectTempPath, JSON.stringify(projectList))
@@ -24,7 +59,7 @@ const remove = (script, options) => {
 }
 
 const list = () => {
-  const projectList = require(projectTempPath)
+  const projectList = getJson(projectTempPath)
     let res = '\n'
     for(key in projectList) {
       res += `${key}`.padEnd(10, ' ') +  `${projectList[key]}\n`
@@ -34,8 +69,8 @@ const list = () => {
 
 const entry = async () => {
   
-  let projectList = require(projectTempPath)
-  let projectActions = require(projectActionPath)
+  let projectList = getJson(projectTempPath)
+  let projectActions = getJson(projectActionPath)
 
   // if(projectList && typeof projectList === 'string') projectList = JSON.parse(projectList)
 
@@ -92,7 +127,7 @@ const entry = async () => {
 }
 
 const command = () => {
-  const actions = require(projectActionPath)
+  const actions = getJson(projectActionPath)
     let res = ''
     let i = 1
     for(key in actions) {
@@ -107,7 +142,7 @@ const setCommand = (script, options) => {
     console.log('\nset-command fail')
     return console.log('zpro set-command <key> <command> [description] \n')
   }
-  const actions = require(projectActionPath)
+  const actions = getJson(projectActionPath)
   actions[key] = {name: desc, command}
   writeJSON(projectActionPath, JSON.stringify(actions))
 }
@@ -118,12 +153,12 @@ const delCommand = (script, options) => {
     console.log('\ndel-command fail')
     return console.log('zpro del-command <key> \n')
   }
-  const actions = require(projectActionPath)
+  const actions = getJson(projectActionPath)
   delete actions[key]
   writeJSON(projectActionPath, JSON.stringify(actions))
 }
 
 module.exports = {
-  entry, add, remove, list,
+  entry, add, remove, list, reset,
   command, setCommand, delCommand
 }

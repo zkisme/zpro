@@ -10,6 +10,6 @@
   },
   "cmder": {
     "name": "用cmder打开",
-    "command": "start cmder.exe /c __projectPath__"
+    "command": "start cmder.exe /START __projectPath__"
   }
 }
