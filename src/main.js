@@ -2,27 +2,13 @@ const path = require('path')
 const inquirer = require('inquirer')
 const { execSync } = require('child_process');
 
-const projectActionPath = path.resolve(__dirname, '../temp/actions.json')
-const projectTempPath = path.resolve(__dirname, '../temp/projectList.json')
+const projectActionPath = path.resolve(process.env.APPDATA, 'zpro', '.actions.json')
+const projectTempPath = path.resolve(process.env.APPDATA, 'zpro', '.projectList.json')
 
 const {writeJSON, readDir, readFile} = require('./utils/file')
 
 const reset = (filePath) => {
-  const actions = {
-    "openCmd": {
-      "name": "用新的CMD打开",
-      "command": "start cmd.exe /k cd __projectPath__"
-    },
-    "openVscode": { "name": "用vscode打开", "command": "code __projectPath__" },
-    "openExplorer": {
-      "name": "用资源管理器打开",
-      "command": "start __projectPath__"
-    },
-    "cmder": {
-      "name": "用cmder打开",
-      "command": "start cmder.exe /START __projectPath__"
-    }
-  }
+  const actions = require('./default/actions.json')
   const projectList = {}
 
   if(filePath === projectActionPath) writeJSON(projectActionPath, JSON.stringify(actions))
@@ -158,7 +144,11 @@ const delCommand = (script, options) => {
   writeJSON(projectActionPath, JSON.stringify(actions))
 }
 
+const openconfig = () => {
+  execSync(`start ${path.join(process.env.AppData, 'zpro')}`)
+}
+
 module.exports = {
-  entry, add, remove, list, reset,
+  entry, add, remove, list, reset,openconfig,
   command, setCommand, delCommand
 }

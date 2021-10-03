@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const program = require('commander')
 
-const {entry, add, remove, list, reset, command, setCommand, delCommand} = require('./src/main')
+const {entry, add, remove, list, reset, command, setCommand, delCommand, openconfig} = require('./src/main')
 
 const package = require('./package.json')
 
@@ -37,5 +37,9 @@ program.command('del-command')
 program.command('reset')
   .description('设置操作命令')
   .action(reset)
+
+program.command('openconfig')
+  .description('设置操作命令')
+  .action(openconfig)
 
 program.parseAsync(process.argv)
